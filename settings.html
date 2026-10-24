@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCM Lite - Settings</title>
+
+  <!-- Font: Poppins (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Apni CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="top-bar">
+      <h1>HCM Lite</h1>
+      <p>Company Settings</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <a href="admin.html" class="nav-link">Dashboard</a>
+      <a href="employees.html" class="nav-link">Employees</a>
+      <a href="leaves.html" class="nav-link">Leaves</a>
+      <a href="settings.html" class="nav-link active">Settings</a>
+      <button type="button" id="logoutBtn" class="nav-link">Logout</button>
+    </nav>
+
+    <!-- Settings form -->
+    <section class="card">
+      <h2>Company settings</h2>
+      <p class="hint">Ye settings attendance, leave aur payslip mein use hongi.</p>
+
+      <form id="settingsForm" novalidate>
+
+        <label for="setStartTime">Office start time</label>
+        <input type="time" id="setStartTime">
+        <span class="error" id="errSetStart"></span>
+
+        <label for="setGrace">Grace minutes (late hone se pehle ke extra minutes)</label>
+        <input type="number" id="setGrace" min="0">
+        <span class="error" id="errSetGrace"></span>
+
+        <label for="setQuota">Saal mein leave quota (din)</label>
+        <input type="number" id="setQuota" min="1">
+        <span class="error" id="errSetQuota"></span>
+
+        <h3>Working days</h3>
+        <div class="days-grid">
+          <label class="day-option"><input type="checkbox" id="day1"> Mon</label>
+          <label class="day-option"><input type="checkbox" id="day2"> Tue</label>
+          <label class="day-option"><input type="checkbox" id="day3"> Wed</label>
+          <label class="day-option"><input type="checkbox" id="day4"> Thu</label>
+          <label class="day-option"><input type="checkbox" id="day5"> Fri</label>
+          <label class="day-option"><input type="checkbox" id="day6"> Sat</label>
+          <label class="day-option"><input type="checkbox" id="day0"> Sun</label>
+        </div>
+        <span class="error" id="errSetDays"></span>
+
+        <button type="submit" class="btn">Settings save karein</button>
+      </form>
+
+      <p class="success" id="settingsDone"></p>
+    </section>
+
+  </div>
+
+  <!-- Scripts body ke aakhir mein. Order: storage, auth. -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ur">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCM Lite - Employee</title>
+
+    <!-- Font: Poppins (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Apni CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <header class="top-bar">
+            <h1>HCM Lite</h1>
+            <p>Employee dashboard</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="employee.html" class="nav-link active">Dashboard</a>
+            <button type="button" id="logoutBtn" class="nav-link">Logout</button>
+        </nav>
+
+        <!-- Is mahine ki summary (Feature 8) -->
+        <section class="card">
+            <h2>Meri summary</h2>
+            <p class="hint" id="mySummary"></p>
+        </section>
+
+        <!-- Attendance card (Feature 6) -->
+        <section class="card">
+            <h2>Attendance</h2>
+            <p class="hint">Office aane par check-in karein, jaate waqt check-out karein.</p>
+
+            <p id="todayStatus" class="status-box"></p>
+
+            <div class="btn-row">
+                <button type="button" id="checkInBtn" class="btn">Check-in</button>
+                <button type="button" id="checkOutBtn" class="btn">Check-out</button>
+            </div>
+
+            <p class="success" id="attendanceMsg"></p>
+        </section>
+
+        <!-- Apni attendance ki history (Feature 6) -->
+        <section class="card">
+            <h2>Meri attendance</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceBody"></tbody>
+                </table>
+            </div>
+
+            <p class="hint hidden" id="noAttendance">Abhi tak koi attendance record nahi hai.</p>
+        </section>
+
+        <!-- Leave apply form (Feature 7) -->
+        <section class="card">
+            <h2>Leave apply karein</h2>
+            <p class="hint" id="balanceText"></p>
+
+            <form id="applyLeaveForm" novalidate>
+
+                <label for="leaveType">Leave ki qisam</label>
+                <select id="leaveType">
+                    <option value="Casual">Casual</option>
+                    <option value="Sick">Sick</option>
+                    <option value="Annual">Annual</option>
+                </select>
+
+                <label for="leaveFrom">Shuru ki date</label>
+                <input type="date" id="leaveFrom">
+                <span class="error" id="errLeaveFrom"></span>
+
+                <label for="leaveTo">Aakhri date</label>
+                <input type="date" id="leaveTo">
+                <span class="error" id="errLeaveTo"></span>
+
+                <label for="leaveReason">Wajah</label>
+                <input type="text" id="leaveReason" placeholder="Chhoti si wajah likhein">
+                <span class="error" id="errLeaveReason"></span>
+
+                <button type="submit" class="btn">Leave apply karein</button>
+            </form>
+
+            <p class="success" id="leaveApplyMsg"></p>
+        </section>
+
+        <!-- Apni leave requests ki list (Feature 7) -->
+        <section class="card">
+            <h2>Meri leaves</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Dates</th>
+                            <th>Din</th>
+                            <th>Status</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myLeaveBody"></tbody>
+                </table>
+            </div>
+
+            <p class="hint hidden" id="noMyLeave">Abhi tak koi leave request nahi hai.</p>
+        </section>
+
+    </div>
+
+    <!-- Scripts body ke aakhir mein. Order: storage, auth, attendance, leave. -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/attendance.js"></script>
+    <script src="js/leave.js"></script>
+
+</body>
+
+</html>

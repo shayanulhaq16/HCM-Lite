@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCM Lite</title>
+
+  <!-- Font: Poppins (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Apni CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="top-bar">
+      <h1>HCM Lite</h1>
+      <p>HR Management App</p>
+    </header>
+
+    <main class="card">
+
+      <!-- Setup form: sirf pehli baar dikhega (Feature 1) -->
+      <section id="setupSection" class="hidden">
+        <h2>Pehli baar ka setup</h2>
+        <p class="hint">Company aur Admin account banayein.</p>
+
+        <form id="setupForm" novalidate>
+
+          <h3>Company settings</h3>
+
+          <label for="companyName">Company ka naam</label>
+          <input type="text" id="companyName" placeholder="Jaise: Saylani Tech">
+          <span class="error" id="errCompanyName"></span>
+
+          <label for="startTime">Office start time</label>
+          <input type="time" id="startTime" value="09:00">
+          <span class="error" id="errStartTime"></span>
+
+          <label for="graceMinutes">Grace minutes</label>
+          <input type="number" id="graceMinutes" value="15" min="0">
+          <span class="error" id="errGraceMinutes"></span>
+
+          <label for="leaveQuota">Saal mein leave quota (din)</label>
+          <input type="number" id="leaveQuota" value="20" min="1">
+          <span class="error" id="errLeaveQuota"></span>
+
+          <h3>Admin account</h3>
+
+          <label for="adminName">Admin ka naam</label>
+          <input type="text" id="adminName" placeholder="Aap ka naam">
+          <span class="error" id="errAdminName"></span>
+
+          <label for="adminEmail">Admin email</label>
+          <input type="email" id="adminEmail" placeholder="admin@mail.com">
+          <span class="error" id="errAdminEmail"></span>
+
+          <label for="adminPassword">Password</label>
+          <input type="password" id="adminPassword" placeholder="Kam se kam 6 characters">
+          <span class="error" id="errAdminPassword"></span>
+
+          <button type="submit" class="btn">Setup save karein</button>
+        </form>
+      </section>
+
+      <!-- Setup ke baad success message (Feature 1) -->
+      <section id="doneSection" class="hidden">
+        <h2>Shukriya!</h2>
+        <p id="doneMessage"></p>
+        <a href="index.html" class="btn">Login karein</a>
+      </section>
+
+      <!-- Login form (Feature 2) -->
+      <section id="loginSection" class="hidden">
+        <h2>Login</h2>
+        <p class="hint">Email aur password se login karein.</p>
+
+        <form id="loginForm" novalidate>
+
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="email@mail.com">
+          <span class="error" id="errLoginEmail"></span>
+
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Apna password">
+          <span class="error" id="errLoginPassword"></span>
+
+          <!-- Galat email ya password par ye message dikhega -->
+          <span class="error" id="loginError"></span>
+
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts hamesha body ke aakhir mein -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+</html>

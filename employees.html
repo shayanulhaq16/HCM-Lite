@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCM Lite - Employees</title>
+
+  <!-- Font: Poppins (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Apni CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="top-bar">
+      <h1>HCM Lite</h1>
+      <p>Employees</p>
+    </header>
+
+    <!-- Navigation: baaqi pages Feature 8 aur baad mein banenge -->
+    <nav class="nav">
+      <a href="admin.html" class="nav-link">Dashboard</a>
+      <a href="employees.html" class="nav-link active">Employees</a>
+      <a href="leaves.html" class="nav-link">Leaves</a>
+      <a href="settings.html" class="nav-link">Settings</a>
+      <button type="button" id="logoutBtn" class="nav-link">Logout</button>
+    </nav>
+
+    <!-- Add / Edit form -->
+    <section class="card">
+      <h2 id="formTitle">Naya employee add karein</h2>
+      <p class="hint">Email aur password se employee ka login bhi banega.</p>
+
+      <form id="employeeForm" novalidate>
+
+        <!-- Hidden input: edit ke waqt employee ki id yahan aati hai. Khali = naya employee -->
+        <input type="hidden" id="editId" value="">
+
+        <label for="empName">Naam</label>
+        <input type="text" id="empName" placeholder="Employee ka naam">
+        <span class="error" id="errEmpName"></span>
+
+        <label for="empEmail">Email (login ke liye)</label>
+        <input type="email" id="empEmail" placeholder="employee@mail.com">
+        <span class="error" id="errEmpEmail"></span>
+
+        <label for="empPassword">Password</label>
+        <input type="password" id="empPassword" placeholder="Kam se kam 6 characters">
+        <span class="error" id="errEmpPassword"></span>
+
+        <label for="empDepartment">Department</label>
+        <input type="text" id="empDepartment" placeholder="Jaise: IT, Sales">
+        <span class="error" id="errEmpDepartment"></span>
+
+        <label for="empSalary">Monthly salary</label>
+        <input type="number" id="empSalary" min="1">
+        <span class="error" id="errEmpSalary"></span>
+
+        <button type="submit" id="saveBtn" class="btn">Save karein</button>
+        <button type="button" id="cancelBtn" class="btn btn-secondary hidden">Cancel</button>
+      </form>
+
+      <p class="success" id="empMessage"></p>
+    </section>
+
+    <!-- Employees ki list, search aur filter -->
+    <section class="card">
+      <h2>Employees ki list</h2>
+
+      <div class="filters">
+        <input type="text" id="searchInput" placeholder="Naam ya email se dhoondein">
+        <select id="deptFilter">
+          <option value="">Sab departments</option>
+        </select>
+      </div>
+
+      <p class="hint" id="countText"></p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Naam</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Salary</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="employeeBody"></tbody>
+        </table>
+      </div>
+
+      <p class="hint hidden" id="noResults">Koi employee nahi mila.</p>
+    </section>
+
+  </div>
+
+  <!-- Scripts hamesha body ke aakhir mein. Order zaroori hai: storage, auth, phir employees. -->
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/employees.js"></script>
+
+</body>
+</html>

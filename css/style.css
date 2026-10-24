@@ -1,0 +1,570 @@
+/* ===== Colors aur font ke variables (ek jagah se poori app ka rang badal sakte hain) ===== */
+:root {
+    --primary: #1e2a47;
+    /* navy */
+    --accent: #2bb3a3;
+    /* teal */
+    --accent-dark: #1f8c7f;
+    --danger: #d64545;
+    /* error ka laal rang */
+    --bg-start: #e8f4f2;
+    --bg-end: #f5f0e6;
+    --text: #223048;
+    --muted: #6b7a90;
+    --border: #d5dde6;
+    --white: #ffffff;
+}
+
+/* ===== Poori body ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    min-height: 100vh;
+}
+
+/* Page ko center mein rakhne ke liye */
+.page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+}
+
+/* ===== Top bar ===== */
+.top-bar {
+    background: var(--primary);
+    color: var(--white);
+    text-align: center;
+    padding: 24px 16px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 16px rgba(30, 42, 71, 0.25);
+    animation: fadeDown 0.6s ease;
+}
+
+.top-bar h1 {
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.top-bar p {
+    color: var(--accent);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* ===== Card (form wala box) ===== */
+.card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: fadeUp 0.6s ease;
+}
+
+.card h2 {
+    color: var(--primary);
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.card h3 {
+    color: var(--accent-dark);
+    font-size: 16px;
+    margin: 20px 0 8px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 4px;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* ===== Form ke andar ke elements ===== */
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+input {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 15px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: #fafcfd;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+/* Jab user input par click kare (focus) to rang badle */
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(43, 179, 163, 0.2);
+}
+
+/* Error message (laal rang, chhota font) */
+.error {
+    display: block;
+    color: var(--danger);
+    font-size: 13px;
+    min-height: 4px;
+    margin-top: 4px;
+}
+
+/* ===== Button ===== */
+.btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.25s, box-shadow 0.25s;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Mouse button ke upar aaye to */
+.btn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(43, 179, 163, 0.35);
+}
+
+/* Button daba ho to thoda neeche */
+.btn:active {
+    transform: translateY(0);
+}
+
+/* ===== Helper class: element chhupane ke liye ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Chhoti screen (phone) ke liye ===== */
+@media (max-width: 480px) {
+    .page {
+        padding: 12px 10px 24px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .top-bar h1 {
+        font-size: 24px;
+    }
+}
+
+
+
+
+/* ===== Navigation ===== */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, transform 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--accent);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
+
+/* ===== Cards ke beech jagah ===== */
+.card + .card {
+  margin-top: 20px;
+}
+
+/* Success message (hara-si lakeer) */
+.success {
+  color: var(--accent-dark);
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
+  min-height: 4px;
+}
+
+/* Cancel button ka rang */
+.btn-secondary {
+  background: var(--muted);
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+}
+
+/* ===== Search aur filter ===== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.filters input {
+  flex: 2 1 160px;
+}
+
+.filters select {
+  flex: 1 1 120px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+}
+
+/* ===== Table ===== */
+.table-wrap {
+  overflow-x: auto; /* chhoti screen par table side se scroll hogi */
+  margin-top: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  background: var(--primary);
+  color: var(--white);
+  text-align: left;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+tr:hover td {
+  background: #f0f8f7;
+}
+
+/* Edit aur Delete ke chhote buttons */
+.small-btn {
+  padding: 6px 10px;
+  margin-right: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--white);
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.25s;
+}
+
+.small-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.danger-btn {
+  background: var(--danger);
+}
+
+.danger-btn:hover {
+  background: #b83232;
+}
+
+
+/* ===== Working days ke checkboxes ===== */
+.days-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.day-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0;
+  padding: 8px 12px;
+  font-weight: 600;
+  background: #fafcfd;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Checkbox ko poori width nahi leni chahiye */
+.day-option input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+/* ===== Attendance ===== */
+.status-box {
+  background: #f0f8f7;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* Do buttons ek saath, barabar width */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-row .btn {
+  margin-top: 16px;
+}
+
+/* Jab button disable ho (jaise check-in ho chuka ho) */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== Leave ===== */
+/* Status ka chhota label */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--border);
+}
+
+/* Table ke action wale column mein input aur buttons ek line mein */
+.action-cell input {
+  width: 110px;
+  padding: 6px 8px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.action-cell .small-btn {
+  margin-top: 4px;
+}
+
+/* ===== Dashboard stats ===== */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 8px;
+  background: #f0f8f7;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+
+.stat-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+
+/* ===== Payslip ===== */
+/* Nav ke links ka group (flex ke andar ek saath) */
+.nav-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Slip ke net salary wali line */
+.net-row td {
+  background: #f0f8f7;
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* Slip ke andar h3 ka style */
+#payslipBody h3 {
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+/* ===== Print ke liye: sirf slip dikhe, buttons aur nav nahi ===== */
+@media print {
+  body {
+    background: var(--white);
+  }
+  .no-print {
+    display: none !important;
+  }
+  .card {
+    box-shadow: none;
+    animation: none;
+  }
+}
+
+
+/* ===== Responsive (phone aur chhoti screen) ===== */
+
+/* Tablet aur chhoti screen */
+@media (max-width: 760px) {
+  .page {
+    max-width: 100%;
+    padding: 12px 10px 24px;
+  }
+}
+
+/* Phone (480px se chhoti screen) */
+@media (max-width: 480px) {
+  /* Nav ke buttons poori line mein, aasani se tap hon */
+  .nav {
+    gap: 6px;
+  }
+  .nav-link {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 10px 10px;
+    font-size: 13px;
+  }
+  .nav-group {
+    width: 100%;
+  }
+
+  /* Filters (search aur department) ek ke neeche ek */
+  .filters input,
+  .filters select {
+    flex: 1 1 100%;
+  }
+
+  /* Do buttons (check-in / check-out) ek ke neeche ek */
+  .btn-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Dashboard numbers chhote karo */
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat-num {
+    font-size: 22px;
+  }
+
+  /* Tables chhoti screen par scroll hon */
+  table {
+    font-size: 13px;
+    min-width: 520px;
+  }
+  th, td {
+    padding: 8px;
+  }
+
+  /* Card ke andar ke headings chhote */
+  .card h2 {
+    font-size: 19px;
+  }
+
+  /* Working days ke checkboxes wrap hon */
+  .day-option {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  /* Button ko touch karna asaan ho */
+  .btn {
+    padding: 14px;
+  }
+}
+
+/* Chhoti screen par nav ke andar buttons ki width */
+@media (max-width: 360px) {
+  .top-bar h1 {
+    font-size: 20px;
+  }
+  .nav-link {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+}
