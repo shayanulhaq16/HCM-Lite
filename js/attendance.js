@@ -657,3 +657,4 @@ if (document.getElementById("payslipBody") !== null) {
     showPayslip();
   }
 }
+

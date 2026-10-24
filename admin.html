@@ -1,110 +1,139 @@
 <!DOCTYPE html>
 <html lang="ur">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HCM Lite - Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCM Lite - Admin</title>
 
-  <!-- Font: Poppins (Google Fonts) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font: Poppins (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Apni CSS -->
-  <link rel="stylesheet" href="css/style.css">
+    <!-- Apni CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <div class="page">
+    <div class="page">
 
-    <header class="top-bar">
-      <h1>HCM Lite</h1>
-      <p>Admin dashboard</p>
-    </header>
+        <header class="top-bar">
+            <h1>HCM Lite</h1>
+            <p>Admin dashboard</p>
+        </header>
 
-    <!-- Navigation -->
-    <nav class="nav">
-      <a href="admin.html" class="nav-link active">Dashboard</a>
-      <a href="employees.html" class="nav-link">Employees</a>
-      <a href="leaves.html" class="nav-link">Leaves</a>
-      <a href="settings.html" class="nav-link">Settings</a>
-      <button type="button" id="logoutBtn" class="nav-link">Logout</button>
-    </nav>
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="admin.html" class="nav-link active">Dashboard</a>
+            <a href="employees.html" class="nav-link">Employees</a>
+            <a href="leaves.html" class="nav-link">Leaves</a>
+            <a href="settings.html" class="nav-link">Settings</a>
+            <button type="button" id="logoutBtn" class="nav-link">Logout</button>
+        </nav>
 
-    <!-- Totals (company ka khulasa) -->
-    <section class="card">
-      <h2>Aaj ka khulasa</h2>
+        <!-- Totals (company ka khulasa) -->
+        <section class="card">
+            <h2>Aaj ka khulasa</h2>
 
-      <div class="stat-grid">
-        <div class="stat-box">
-          <span class="stat-num" id="statEmployees">0</span>
-          <span class="stat-label">Employees</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num" id="statPresent">0</span>
-          <span class="stat-label">Check-in</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num" id="statLate">0</span>
-          <span class="stat-label">Late</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num" id="statLeave">0</span>
-          <span class="stat-label">Chhutti par</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num" id="statPending">0</span>
-          <span class="stat-label">Pending leaves</span>
-        </div>
-      </div>
-    </section>
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <span class="stat-num" id="statEmployees">0</span>
+                    <span class="stat-label">Employees</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="statPresent">0</span>
+                    <span class="stat-label">Check-in</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="statLate">0</span>
+                    <span class="stat-label">Late</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="statLeave">0</span>
+                    <span class="stat-label">Chhutti par</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="statPending">0</span>
+                    <span class="stat-label">Pending leaves</span>
+                </div>
+            </div>
+        </section>
 
-    <!-- Aaj ki attendance -->
-    <section class="card">
-      <h2>Aaj ki attendance</h2>
+        <!-- Aaj ki attendance -->
+        <section class="card">
+            <h2>Aaj ki attendance</h2>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Naam</th>
-              <th>Department</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="todayBody"></tbody>
-        </table>
-      </div>
-    </section>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Department</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todayBody"></tbody>
+                </table>
+            </div>
+        </section>
 
-    <!-- Sab attendance records -->
-    <section class="card">
-      <h2>Attendance records</h2>
+        <!-- Announcement post karna (Announcements feature) -->
+        <section class="card">
+            <h2>Announcement post karein</h2>
+            <p class="hint">Ye sab employees ke dashboard par dikhega.</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Naam</th>
-              <th>Date</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="allAttendanceBody"></tbody>
-        </table>
-      </div>
-    </section>
+            <form id="annForm" novalidate>
 
-  </div>
+                <label for="annTitle">Title</label>
+                <input type="text" id="annTitle" placeholder="Jaise: Eid ki chhutti">
+                <span class="error" id="errAnnTitle"></span>
 
-  <!-- Scripts body ke aakhir mein. Order: storage, auth, attendance, leave. -->
-  <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/attendance.js"></script>
-  <script src="js/leave.js"></script>
+                <label for="annMessage">Message</label>
+                <textarea id="annMessage" rows="3" placeholder="Pura message likhein"></textarea>
+                <span class="error" id="errAnnMessage"></span>
+
+                <button type="submit" class="btn">Post karein</button>
+            </form>
+
+            <p class="success" id="annDone"></p>
+
+            <h3>Post ki gayi announcements</h3>
+            <div id="annAdminList"></div>
+            <p class="hint hidden" id="noAnnAdmin">Abhi koi announcement nahi hai.</p>
+        </section>
+
+        <!-- Sab attendance records -->
+        <section class="card">
+            <h2>Attendance records</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Date</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allAttendanceBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts body ke aakhir mein. Order: storage, auth, attendance, leave. -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/attendance.js"></script>
+        <script src="js/announcements.js"></script>
+    <script src="js/leave.js"></script>
 
 </body>
+
 </html>

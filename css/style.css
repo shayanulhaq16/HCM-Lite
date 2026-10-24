@@ -568,3 +568,38 @@ tr:hover td {
     padding: 8px 6px;
   }
 }
+
+
+/* ===== Announcements ===== */
+/* Textarea ko bhi input jaisa dikhao */
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: #fafcfd;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(43, 179, 163, 0.2);
+}
+
+/* Ek announcement ka box */
+.ann-item {
+  background: #f0f8f7;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.ann-item p {
+  font-size: 14px;
+  margin: 4px 0;
+}
