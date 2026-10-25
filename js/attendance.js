@@ -484,10 +484,12 @@ function countWorkingDaysInMonth(monthText) {
 }
 
 // Ek employee ke ek mahine ki pori calculation karta hai.
+// Join date se pehle ke din nahi ginte.
 function calculatePayslip(userId, salary, monthText) {
   var workDays = countWorkingDaysInMonth(monthText);
   var attList = getAttendanceList();
   var leaveList = getLeaveList();
+  var joinDate = getJoinDateOf(userId);
 
   var company = getCompany();
   var days = company.workingDays;
@@ -500,42 +502,44 @@ function calculatePayslip(userId, salary, monthText) {
   var monthIndex = Number(parts[1]) - 1;
   var lastDay = new Date(year, monthIndex + 1, 0).getDate();
 
-  var present = 0; // poore din (present aur late)
-  var half = 0;    // half day
-  var absent = 0;  // absent din
+  var present = 0;
+  var half = 0;
+  var absent = 0;
 
-  // Har din check karo
   for (var d = 1; d <= lastDay; d++) {
     var dateText = monthText + "-" + pad2(d);
     var dayNumber = new Date(year, monthIndex, d).getDay();
 
-    // Sirf kaam ke din ginte hain
+    // Kaam ka din nahi
     if (!listHasNumber(days, dayNumber)) {
-      continue; // is din ko chhod kar agle din par jao
+      continue;
     }
 
-    // Abhi guzra nahi, is ko mat gino
+    // Abhi guzra nahi
     if (dateText > getTodayDate()) {
+      continue;
+    }
+
+    // Join date se pehle ka din: nahi ginna
+    if (joinDate !== "" && dateText < joinDate) {
       continue;
     }
 
     var index = findRecordIndex(attList, userId, dateText);
 
     if (index !== -1) {
-      // Record hai
       if (attList[index].status === "half day") {
         half++;
       } else {
-        present++; // present ya late dono poora din
+        present++;
       }
     } else if (isOnLeaveOn(leaveList, userId, dateText)) {
-      // Approved leave: absent nahi, ye paid hai
+      // Approved leave: absent nahi
     } else {
-      absent++; // na check-in, na leave: absent
+      absent++;
     }
   }
 
-  // Per day salary (mahine ke kaam ke din se bhaag do)
   var perDay = 0;
   if (workDays.total > 0) {
     perDay = salary / workDays.total;
@@ -556,7 +560,7 @@ function calculatePayslip(userId, salary, monthText) {
   };
 }
 
-// Screen par slip ka table banata hai.
+// Screen par slip ka table banata hai. Join month se pehle ka mahina ho to error dikhata hai.
 function showPayslip() {
   var session = getSession();
   var monthText = document.getElementById("monthPicker").value;
@@ -567,7 +571,6 @@ function showPayslip() {
     return;
   }
 
-  // Kis ki slip dikhani hai? Admin dropdown se, employee khud.
   var targetId = session.id;
   if (session.role === "admin") {
     var pick = document.getElementById("empSelect").value;
@@ -585,16 +588,24 @@ function showPayslip() {
     return;
   }
 
+  // Join month check: join month se pehle ka mahina nahi chal sakta
+  var joinMonth = getJoinMonthOf(user.id);
+  if (joinMonth !== "" && monthText < joinMonth) {
+    body.innerHTML =
+      "<p class='error'>Ye mahina join date se pehle ka hai. " +
+      user.name + " ki join date: " + user.joinDate + ". Is se pehle ka mahina nahi chal sakta.</p>";
+    return;
+  }
+
   var slip = calculatePayslip(user.id, user.salary, monthText);
 
-  // Numbers ko achha dikhane ke liye round karte hain
   var perDayText = Math.round(slip.perDay);
   var deductionText = Math.round(slip.deduction);
   var netText = Math.round(slip.net);
 
   body.innerHTML =
     "<h3>" + user.name + " (" + user.department + ")</h3>" +
-    "<p class='hint'>Mahina: " + monthText + "</p>" +
+    "<p class='hint'>Mahina: " + monthText + " | Join date: " + (user.joinDate || "-") + "</p>" +
     "<table>" +
       "<tbody>" +
         "<tr><td>Monthly salary</td><td>" + slip.salary + "</td></tr>" +
@@ -658,3 +669,21 @@ if (document.getElementById("payslipBody") !== null) {
   }
 }
 
+// ================= Join date helpers =================
+
+// Employee ki joining date lo ("YYYY-MM-DD"). Nahi hai to khali string.
+function getJoinDateOf(userId) {
+  var users = getUsers();
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id === userId) {
+      return users[i].joinDate || "";
+    }
+  }
+  return "";
+}
+
+// Joining date ka mahina ("YYYY-MM"). Khali ho to khali string.
+function getJoinMonthOf(userId) {
+  var joinDate = getJoinDateOf(userId);
+  return joinDate === "" ? "" : joinDate.substring(0, 7);
+}

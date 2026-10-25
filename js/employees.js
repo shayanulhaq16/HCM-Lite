@@ -64,8 +64,9 @@ function isEmailTakenExcept(email, ignoreId) {
 }
 
 // Form ke saare error messages khali karta hai.
+// Form ke saare error messages khali karta hai.
 function clearEmpErrors() {
-  var ids = ["errEmpName", "errEmpEmail", "errEmpPassword", "errEmpDepartment", "errEmpSalary"];
+  var ids = ["errEmpName", "errEmpEmail", "errEmpPassword", "errEmpDepartment", "errEmpSalary", "errEmpJoin"];
 
   for (var i = 0; i < ids.length; i++) {
     document.getElementById(ids[i]).innerHTML = "";
@@ -91,7 +92,6 @@ function handleEmployeeSave(event) {
   clearEmpErrors();
   document.getElementById("empMessage").innerHTML = "";
 
-  // editId khali hai to naya employee, warna edit ho raha hai
   var editId = document.getElementById("editId").value;
   var isEditing = editId !== "";
 
@@ -101,13 +101,12 @@ function handleEmployeeSave(event) {
   var department = document.getElementById("empDepartment").value.trim();
   var salaryText = document.getElementById("empSalary").value;
   var salary = Number(salaryText);
+  var joinDate = document.getElementById("empJoin").value; // "YYYY-MM-DD" ya khali
 
-  // Email check mein kis user ko chhodna hai (naye ke liye -1, edit ke liye wahi user)
   var ignoreId = isEditing ? Number(editId) : -1;
 
   var hasError = false;
 
-  // ---------- Validation ----------
   if (name === "") {
     showError("errEmpName", "Naam likhna zaroori hai.");
     hasError = true;
@@ -118,7 +117,6 @@ function handleEmployeeSave(event) {
     hasError = true;
   }
 
-  // Naye employee ka password zaroori hai. Edit mein khali chhod sakte hain (purana rahega).
   if (!isEditing && password === "") {
     showError("errEmpPassword", "Password likhein.");
     hasError = true;
@@ -137,8 +135,14 @@ function handleEmployeeSave(event) {
     hasError = true;
   }
 
+  // Joining date zaroori hai
+  if (joinDate === "") {
+    showError("errEmpJoin", "Joining date chunein.");
+    hasError = true;
+  }
+
   if (hasError) {
-    return; // koi error hai to save na karo
+    return;
   }
 
   if (isEmailTakenExcept(email, ignoreId)) {
@@ -146,11 +150,9 @@ function handleEmployeeSave(event) {
     return;
   }
 
-  // ---------- Save ----------
   var users = getUsers();
 
   if (isEditing) {
-    // Edit: purane employee ko dhoond kar uski info badlo
     var index = findUserIndex(Number(editId));
     if (index === -1) {
       showError("errEmpName", "Employee nahi mila. Dobara koshish karein.");
@@ -161,8 +163,8 @@ function handleEmployeeSave(event) {
     users[index].email = email;
     users[index].department = department;
     users[index].salary = salary;
+    users[index].joinDate = joinDate;
 
-    // Password sirf tab badlo jab naya likha ho
     if (password !== "") {
       users[index].password = password;
     }
@@ -170,7 +172,6 @@ function handleEmployeeSave(event) {
     saveUsers(users);
     document.getElementById("empMessage").innerHTML = "Employee ki maloomat update ho gayi.";
   } else {
-    // Naya employee: login ke saath add karo
     users.push({
       id: newId(),
       name: name,
@@ -178,7 +179,8 @@ function handleEmployeeSave(event) {
       password: password,
       role: "employee",
       department: department,
-      salary: salary
+      salary: salary,
+      joinDate: joinDate
     });
 
     saveUsers(users);
@@ -186,8 +188,8 @@ function handleEmployeeSave(event) {
   }
 
   resetForm();
-  fillDepartmentFilter(); // naya department aaya ho to dropdown mein aa jaye
-  showEmployees();        // list refresh karo
+  fillDepartmentFilter();
+  showEmployees();
 }
 
 // ================= Edit aur Delete =================
@@ -205,16 +207,17 @@ function startEdit(id) {
   document.getElementById("editId").value = user.id;
   document.getElementById("empName").value = user.name;
   document.getElementById("empEmail").value = user.email;
-  document.getElementById("empPassword").value = ""; // password nahi dikhate
+  document.getElementById("empPassword").value = "";
   document.getElementById("empDepartment").value = user.department;
   document.getElementById("empSalary").value = user.salary;
+  document.getElementById("empJoin").value = user.joinDate || ""; // purane employees ke liye khali
 
   document.getElementById("formTitle").innerHTML = "Employee edit karein";
   document.getElementById("saveBtn").innerHTML = "Update karein";
   document.getElementById("cancelBtn").classList.remove("hidden");
   document.getElementById("empMessage").innerHTML = "";
 
-  window.scrollTo(0, 0); // form upar dikhane ke liye page upar le jao
+  window.scrollTo(0, 0);
 }
 
 // Delete button par chalta hai. Confirm karke employee ko list se hatata hai.

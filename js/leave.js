@@ -157,6 +157,17 @@ function handleApplyLeave(event) {
     return;
   }
 
+    // Join month check: join month se pehle ki date par leave nahi
+  var joinMonth = getJoinMonthOf(session.id);
+  if (joinMonth !== "" && from.substring(0, 7) < joinMonth) {
+    showError("errLeaveFrom", "Join month (" + joinMonth + ") se pehle ki date par leave nahi le sakte.");
+    return;
+  }
+  if (joinMonth !== "" && to.substring(0, 7) < joinMonth) {
+    showError("errLeaveTo", "Join month (" + joinMonth + ") se pehle ki date par leave nahi le sakte.");
+    return;
+  }
+
   // Rule: from date to date se pehle ya barabar ho
   if (from > to) {
     showError("errLeaveTo", "Aakhri date shuru ki date ke baad ya barabar honi chahiye.");
