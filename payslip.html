@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="ur">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HCM Lite - Payslip</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCM Lite - Payslip</title>
 
-  <!-- Font: Poppins (Google Fonts) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font: Poppins (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Apni CSS -->
-  <link rel="stylesheet" href="css/style.css">
+    <!-- Apni CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <div class="page">
+    <div class="page">
 
-    <header class="top-bar no-print">
-      <h1>HCM Lite</h1>
-      <p>Monthly payslip</p>
-    </header>
+        <header class="top-bar no-print">
+            <h1>HCM Lite</h1>
+            <p>Monthly payslip</p>
+        </header>
 
-    <!-- Navigation: role ke hisaab se links dikhenge (JS se) -->
-    <nav class="nav no-print">
-      <!-- Admin ke links (shuru mein chhupe hain) -->
-      <div id="adminNavLinks" class="hidden nav-group">
-        <a href="admin.html" class="nav-link">Dashboard</a>
-        <a href="employees.html" class="nav-link">Employees</a>
-        <a href="leaves.html" class="nav-link">Leaves</a>
-        <a href="settings.html" class="nav-link">Settings</a>
-      </div>
+        <!-- Navigation: role ke hisaab se links dikhenge (JS se) -->
+        <nav class="nav no-print">
+            <!-- Admin ke links (shuru mein chhupe hain) -->
+            <div id="adminNavLinks" class="hidden nav-group">
+                <a href="admin.html" class="nav-link">Dashboard</a>
+                <a href="employees.html" class="nav-link">Employees</a>
+                <a href="leaves.html" class="nav-link">Leaves</a>
+                <a href="settings.html" class="nav-link">Settings</a>
+            </div>
 
-      <!-- Employee ke links (shuru mein chhupe hain) -->
-      <div id="empNavLinks" class="hidden nav-group">
-        <a href="employee.html" class="nav-link">Dashboard</a>
-      </div>
+            <!-- Employee ke links (shuru mein chhupe hain) -->
+            <div id="empNavLinks" class="hidden nav-group">
+                <a href="employee.html" class="nav-link">Dashboard</a>
+            </div>
 
-      <a href="payslip.html" class="nav-link active">Payslip</a>
-      <button type="button" id="logoutBtn" class="nav-link">Logout</button>
-    </nav>
+            <a href="payslip.html" class="nav-link active">Payslip</a>
+            <button type="button" id="logoutBtn" class="nav-link">Logout</button>
+        </nav>
 
-    <!-- Mahina aur employee chunne ke controls -->
-    <section class="card no-print">
-      <h2>Salary slip</h2>
-      <p class="hint">Mahina chunein. Print ya PDF ke liye button dabayein.</p>
+        <!-- Mahina aur employee chunne ke controls -->
+        <section class="card no-print">
+            <h2>Salary slip</h2>
+            <p class="hint">Mahina chunein. Print ya PDF ke liye button dabayein.</p>
 
-      <label for="monthPicker">Mahina</label>
-      <input type="month" id="monthPicker">
+            <label for="monthPicker">Mahina</label>
+            <input type="month" id="monthPicker">
 
-      <!-- Sirf Admin ko dikhega -->
-      <div id="adminPick" class="hidden">
-        <label for="empSelect">Employee</label>
-        <select id="empSelect">
-          <option value="">-- Employee chunein --</option>
-        </select>
-      </div>
+            <!-- Sirf Admin ko dikhega -->
+            <div id="adminPick" class="hidden">
+                <label for="empSelect">Employee</label>
+                <select id="empSelect">
+                    <option value="">-- Employee chunein --</option>
+                </select>
+            </div>
 
-      <button type="button" id="printBtn" class="btn">Print / PDF save karein</button>
-    </section>
+            <button type="button" id="printBtn" class="btn">Print / PDF save karein</button>
+        </section>
 
-    <!-- Slip yahan dikhegi (JS se bharta hai) -->
-    <section class="card" id="slipCard">
-      <div id="payslipBody"></div>
-    </section>
+        <!-- Slip yahan dikhegi (JS se bharta hai) -->
+        <section class="card" id="slipCard">
+            <div id="payslipBody"></div>
+        </section>
 
-  </div>
+    </div>
 
-  <!-- Scripts body ke aakhir mein. Order: storage, auth, attendance (slip ka code attendance.js mein hai). -->
-  <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/attendance.js"></script>
+    <!-- Scripts body ke aakhir mein. Order: storage, auth, attendance (slip ka code attendance.js mein hai). -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/attendance.js"></script>
+    <script src="js/leave.js"></script>
 
 </body>
+
 </html>

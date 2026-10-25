@@ -1,292 +1,466 @@
-/* ===== Colors aur font ke variables (ek jagah se poori app ka rang badal sakte hain) ===== */
+/* =====================================================
+   HCM Lite: University portal style (laptop + phone)
+   ===================================================== */
+
+/* ===== Rang aur font (ek jagah se poori app badlegi) ===== */
 :root {
-    --primary: #1e2a47;
-    /* navy */
-    --accent: #2bb3a3;
-    /* teal */
-    --accent-dark: #1f8c7f;
-    --danger: #d64545;
-    /* error ka laal rang */
-    --bg-start: #e8f4f2;
-    --bg-end: #f5f0e6;
-    --text: #223048;
-    --muted: #6b7a90;
-    --border: #d5dde6;
-    --white: #ffffff;
+  --primary: #1e2a47;        /* navy */
+  --primary-soft: #2c3d66;
+  --accent: #2bb3a3;         /* teal */
+  --accent-dark: #1f8c7f;
+  --accent-light: #e6f6f3;
+  --gold: #f2b84b;           /* chhota highlight */
+  --danger: #d64545;
+  --danger-dark: #b83232;
+  --text: #223048;
+  --muted: #6b7a90;
+  --border: #dbe3ec;
+  --white: #ffffff;
+  --bg: #f3f7f9;
+
+  --font-head: "Poppins", "Segoe UI", Arial, sans-serif;
+  --font-body: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-sm: 0 2px 8px rgba(30, 42, 71, 0.06);
+  --shadow: 0 10px 30px rgba(30, 42, 71, 0.10);
+  --shadow-hover: 0 18px 40px rgba(30, 42, 71, 0.16);
 }
 
-/* ===== Poori body ===== */
+/* ===== Reset aur body ===== */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: "Poppins", Arial, sans-serif;
-    color: var(--text);
-    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-    min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Page ko center mein rakhne ke liye */
+/* Background par halki rangeen roshni (decorative, click nahi hoti) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+body::before {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -120px;
+  background: var(--accent);
+}
+
+body::after {
+  width: 380px;
+  height: 380px;
+  bottom: -120px;
+  right: -100px;
+  background: var(--gold);
+}
+
+/* ===== Page ka main container (laptop par wide) ===== */
 .page {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 24px 16px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
 }
 
-/* ===== Top bar ===== */
+/* ===== Top bar (portal ka header) ===== */
 .top-bar {
-    background: var(--primary);
-    color: var(--white);
-    text-align: center;
-    padding: 24px 16px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 16px rgba(30, 42, 71, 0.25);
-    animation: fadeDown 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--primary) 0%, var(--primary-soft) 60%, var(--accent-dark) 100%);
+  color: var(--white);
+  padding: 26px 28px;
+  border-radius: var(--radius);
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: fadeDown 0.6s ease both;
+}
+
+/* Chamakta hua sheesha effect */
+.top-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: skewX(-20deg);
+  animation: shine 5s ease-in-out infinite;
+}
+
+/* Logo ki jagah chhota badge */
+.top-bar h1::before {
+  content: "HCM";
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-right: 14px;
+  border-radius: 14px;
+  background: var(--gold);
+  color: var(--primary);
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
 }
 
 .top-bar h1 {
-    font-size: 28px;
-    letter-spacing: 1px;
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
 
 .top-bar p {
-    color: var(--accent);
-    font-size: 14px;
-    margin-top: 4px;
+  margin-left: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--accent);
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
-/* ===== Card (form wala box) ===== */
-.card {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    animation: fadeUp 0.6s ease;
-}
-
-.card h2 {
-    color: var(--primary);
-    font-size: 22px;
-    margin-bottom: 4px;
-}
-
-.card h3 {
-    color: var(--accent-dark);
-    font-size: 16px;
-    margin: 20px 0 8px;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 4px;
-}
-
-.hint {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 12px;
-}
-
-/* ===== Form ke andar ke elements ===== */
-label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 4px;
-}
-
-input {
-    width: 100%;
-    padding: 10px 12px;
-    font-family: inherit;
-    font-size: 15px;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    background: #fafcfd;
-    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
-}
-
-/* Jab user input par click kare (focus) to rang badle */
-input:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: var(--white);
-    box-shadow: 0 0 0 4px rgba(43, 179, 163, 0.2);
-}
-
-/* Error message (laal rang, chhota font) */
-.error {
-    display: block;
-    color: var(--danger);
-    font-size: 13px;
-    min-height: 4px;
-    margin-top: 4px;
-}
-
-/* ===== Button ===== */
-.btn {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--white);
-    background: var(--accent);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.15s, background 0.25s, box-shadow 0.25s;
-    text-align: center;
-    text-decoration: none;
-}
-
-/* Mouse button ke upar aaye to */
-.btn:hover {
-    background: var(--accent-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(43, 179, 163, 0.35);
-}
-
-/* Button daba ho to thoda neeche */
-.btn:active {
-    transform: translateY(0);
-}
-
-/* ===== Helper class: element chhupane ke liye ===== */
-.hidden {
-    display: none !important;
-}
-
-/* ===== Animations ===== */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===== Chhoti screen (phone) ke liye ===== */
-@media (max-width: 480px) {
-    .page {
-        padding: 12px 10px 24px;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .top-bar h1 {
-        font-size: 24px;
-    }
-}
-
-
-
-
-/* ===== Navigation ===== */
+/* ===== Navigation (sticky glass bar) ===== */
 .nav {
+  position: sticky;
+  top: 12px;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-link {
-  padding: 8px 14px;
-  font-family: inherit;
+  position: relative;
+  padding: 9px 16px;
+  font-family: var(--font-head);
   font-size: 14px;
   font-weight: 600;
   color: var(--primary);
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.25s, color 0.25s, transform 0.15s;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
 }
 
 .nav-link:hover {
-  background: var(--accent);
-  color: var(--white);
+  background: var(--accent-light);
+  color: var(--accent-dark);
   transform: translateY(-2px);
 }
 
+/* Jo page khula hai uska link */
 .nav-link.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
   color: var(--white);
-  border-color: var(--primary);
+  box-shadow: 0 6px 14px rgba(30, 42, 71, 0.25);
 }
 
-/* ===== Cards ke beech jagah ===== */
+/* Logout ka link lal hover par */
+#logoutBtn {
+  margin-left: auto;
+  color: var(--danger);
+}
+
+#logoutBtn:hover {
+  background: #fdecec;
+  color: var(--danger-dark);
+}
+
+.nav-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ===== Cards (portal ke boxes) ===== */
+.card {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(219, 227, 236, 0.7);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  animation: fadeUp 0.6s ease both;
+}
+
+/* Upar ki patli rangeen lakeer */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  opacity: 0.85;
+}
+
+.card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* Cards ek ke baad ek thora der se aayein */
+.card:nth-of-type(2) { animation-delay: 0.08s; }
+.card:nth-of-type(3) { animation-delay: 0.16s; }
+.card:nth-of-type(4) { animation-delay: 0.24s; }
+.card:nth-of-type(5) { animation-delay: 0.32s; }
+.card:nth-of-type(6) { animation-delay: 0.40s; }
+
 .card + .card {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
-/* Success message (hara-si lakeer) */
+.card h2 {
+  font-family: var(--font-head);
+  color: var(--primary);
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Heading ke neeche chhoti accent line */
+.card h2::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 3px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.card:hover h2::after {
+  width: 90px;
+}
+
+.card h3 {
+  font-family: var(--font-head);
+  color: var(--accent-dark);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px dashed var(--border);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 6px 0 14px;
+}
+
+/* ===== Form elements ===== */
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.2px;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+input:not([type="checkbox"]):not([type="hidden"]),
+select,
+textarea {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fbfdfe;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s, transform 0.2s;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Focus par glow aur thora upar uthna */
+input:not([type="checkbox"]):not([type="hidden"]):focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(43, 179, 163, 0.18);
+  transform: translateY(-1px);
+}
+
+input:not([type="checkbox"]):not([type="hidden"]):hover,
+select:hover,
+textarea:hover {
+  border-color: #b9c8d8;
+}
+
+/* Error message: ⚠ ke saath */
+.error {
+  display: block;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 4px;
+  margin-top: 6px;
+}
+
+.error:not(:empty)::before {
+  content: "⚠ ";
+}
+
+/* ===== Buttons ===== */
+.btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px 16px;
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 6px 14px rgba(43, 179, 163, 0.25);
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.25s, filter 0.25s;
+}
+
+/* Button par roshni ki lehar */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(43, 179, 163, 0.35);
+}
+
+.btn:hover:not(:disabled)::after {
+  left: 125%;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.99);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Cancel jaisa halka button */
+.btn-secondary {
+  background: linear-gradient(135deg, var(--muted), #56637a);
+  box-shadow: 0 6px 14px rgba(107, 122, 144, 0.25);
+}
+
+/* ===== Success aur chhote messages ===== */
 .success {
   color: var(--accent-dark);
   font-size: 14px;
   font-weight: 600;
-  margin-top: 10px;
-  min-height: 4px;
+  margin-top: 12px;
 }
 
-/* Cancel button ka rang */
-.btn-secondary {
-  background: var(--muted);
+.success:not(:empty) {
+  display: inline-block;
+  padding: 8px 14px;
+  background: var(--accent-light);
+  border-radius: 999px;
 }
 
-.btn-secondary:hover {
-  background: var(--primary);
+.success:not(:empty)::before {
+  content: "✔ ";
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* ===== Search aur filter ===== */
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 14px;
 }
 
 .filters input {
-  flex: 2 1 160px;
+  flex: 2 1 220px;
 }
 
 .filters select {
-  flex: 1 1 120px;
-  padding: 10px;
-  font-family: inherit;
-  font-size: 14px;
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: 8px;
+  flex: 1 1 160px;
 }
 
-/* ===== Table ===== */
+/* ===== Table (rounded aur sticky-feel header) ===== */
 .table-wrap {
-  overflow-x: auto; /* chhoti screen par table side se scroll hogi */
-  margin-top: 12px;
+  margin-top: 14px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
 table {
@@ -296,310 +470,386 @@ table {
 }
 
 th {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
   color: var(--white);
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
   text-align: left;
-  padding: 10px;
+  padding: 12px 14px;
+  white-space: nowrap;
 }
 
 td {
-  padding: 10px;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--border);
+  vertical-align: middle;
 }
 
-tr:hover td {
-  background: #f0f8f7;
+tbody tr:last-child td {
+  border-bottom: none;
 }
 
-/* Edit aur Delete ke chhote buttons */
+/* Row par hover: halka teal aur thora slide */
+tbody tr {
+  transition: background 0.2s;
+}
+
+tbody tr:hover td {
+  background: var(--accent-light);
+}
+
+/* Table ke chhote buttons (Edit, Delete) */
 .small-btn {
-  padding: 6px 10px;
+  padding: 7px 12px;
   margin-right: 4px;
-  font-family: inherit;
-  font-size: 13px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
   color: var(--white);
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.15s, background 0.25s;
+  box-shadow: 0 3px 8px rgba(43, 179, 163, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .small-btn:hover {
-  background: var(--accent-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(43, 179, 163, 0.35);
 }
 
 .danger-btn {
-  background: var(--danger);
+  background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+  box-shadow: 0 3px 8px rgba(214, 69, 69, 0.25);
 }
 
 .danger-btn:hover {
-  background: #b83232;
+  box-shadow: 0 6px 14px rgba(214, 69, 69, 0.35);
 }
 
-
-/* ===== Working days ke checkboxes ===== */
-.days-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.day-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 0;
-  padding: 8px 12px;
-  font-weight: 600;
-  background: #fafcfd;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* Checkbox ko poori width nahi leni chahiye */
-.day-option input {
-  width: auto;
-  margin: 0;
-  accent-color: var(--accent);
-}
-
-/* ===== Attendance ===== */
-.status-box {
-  background: #f0f8f7;
-  border-left: 4px solid var(--accent);
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
-/* Do buttons ek saath, barabar width */
-.btn-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.btn-row .btn {
-  margin-top: 16px;
-}
-
-/* Jab button disable ho (jaise check-in ho chuka ho) */
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* ===== Leave ===== */
-/* Status ka chhota label */
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  background: var(--border);
-}
-
-/* Table ke action wale column mein input aur buttons ek line mein */
+/* Table ke action column mein input aur buttons */
 .action-cell input {
-  width: 110px;
-  padding: 6px 8px;
+  width: 120px;
+  padding: 7px 10px;
   font-size: 13px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .action-cell .small-btn {
   margin-top: 4px;
 }
 
-/* ===== Dashboard stats ===== */
+/* ===== Working days (chip jaise checkboxes) ===== */
+.days-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.day-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 9px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  background: #fbfdfe;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.day-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+/* Jo din chuna gaya, wo rangeen ho jaye */
+.day-option:has(input:checked) {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border-color: transparent;
+  color: var(--white);
+}
+
+.day-option input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ===== Attendance ===== */
+.status-box {
+  margin-top: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  background: linear-gradient(90deg, var(--accent-light), #f7fcfb);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.btn-row .btn {
+  margin-top: 16px;
+}
+
+/* ===== Leave badge ===== */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--border);
+}
+
+/* ===== Dashboard stats (rangeen tiles) ===== */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-  margin-top: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .stat-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 14px 8px;
-  background: #f0f8f7;
-  border-left: 4px solid var(--accent);
-  border-radius: 8px;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px 18px 16px;
+  background: linear-gradient(145deg, #ffffff, var(--accent-light));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(43, 179, 163, 0.18);
 }
 
 .stat-num {
-  font-size: 26px;
+  font-family: var(--font-head);
+  font-size: 30px;
   font-weight: 700;
   color: var(--primary);
+  line-height: 1.1;
 }
 
 .stat-label {
   font-size: 13px;
+  font-weight: 500;
   color: var(--muted);
-  text-align: center;
 }
-
 
 /* ===== Payslip ===== */
-/* Nav ke links ka group (flex ke andar ek saath) */
-.nav-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Slip ke net salary wali line */
 .net-row td {
-  background: #f0f8f7;
+  background: var(--accent-light);
   color: var(--primary);
   font-size: 16px;
 }
 
-/* Slip ke andar h3 ka style */
 #payslipBody h3 {
+  font-family: var(--font-head);
   color: var(--primary);
-  font-size: 18px;
+  font-size: 19px;
   margin-bottom: 4px;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
-/* ===== Print ke liye: sirf slip dikhe, buttons aur nav nahi ===== */
+/* ===== Announcements ===== */
+.ann-item {
+  position: relative;
+  margin-top: 12px;
+  padding: 14px 16px 12px;
+  background: #fbfdfe;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-sm);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.ann-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.ann-item strong {
+  font-family: var(--font-head);
+  font-size: 15px;
+  color: var(--primary);
+}
+
+.ann-item p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+/* ===== Print: sirf slip dikhe ===== */
 @media print {
   body {
     background: var(--white);
   }
-  .no-print {
+  body::before,
+  body::after {
+    display: none;
+  }
+  .no-print,
+  .nav {
     display: none !important;
   }
   .card {
     box-shadow: none;
     animation: none;
+    border: none;
+  }
+  .card::before {
+    display: none;
   }
 }
 
+/* ===== Animations ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* ===== Responsive (phone aur chhoti screen) ===== */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* Tablet aur chhoti screen */
+@keyframes shine {
+  0%, 60%  { left: -60%; }
+  100%     { left: 130%; }
+}
+
+/* ===== Tablet (760px se chhoti) ===== */
 @media (max-width: 760px) {
   .page {
-    max-width: 100%;
-    padding: 12px 10px 24px;
+    padding: 16px 12px 36px;
+  }
+
+  .top-bar {
+    padding: 20px 18px;
+  }
+
+  .top-bar p {
+    display: none;
   }
 }
 
-/* Phone (480px se chhoti screen) */
+/* ===== Phone (480px se chhoti) ===== */
 @media (max-width: 480px) {
-  /* Nav ke buttons poori line mein, aasani se tap hon */
-  .nav {
-    gap: 6px;
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
+
+  .top-bar h1 {
+    font-size: 21px;
+  }
+
+  .top-bar h1::before {
+    width: 44px;
+    height: 44px;
+    font-size: 11px;
+  }
+
+  .nav {
+    top: 8px;
+    gap: 6px;
+    padding: 8px;
+  }
+
   .nav-link {
     flex: 1 1 auto;
     text-align: center;
-    padding: 10px 10px;
+    padding: 9px 10px;
     font-size: 13px;
   }
+
+  #logoutBtn {
+    margin-left: 0;
+  }
+
   .nav-group {
     width: 100%;
   }
 
-  /* Filters (search aur department) ek ke neeche ek */
+  .card {
+    padding: 18px 16px;
+  }
+
+  .card h2 {
+    font-size: 19px;
+  }
+
   .filters input,
   .filters select {
     flex: 1 1 100%;
   }
 
-  /* Do buttons (check-in / check-out) ek ke neeche ek */
   .btn-row {
     grid-template-columns: 1fr;
   }
 
-  /* Dashboard numbers chhote karo */
   .stat-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .stat-num {
-    font-size: 22px;
+    font-size: 24px;
   }
 
-  /* Tables chhoti screen par scroll hon */
   table {
     font-size: 13px;
     min-width: 520px;
   }
+
   th, td {
-    padding: 8px;
+    padding: 9px 10px;
   }
 
-  /* Card ke andar ke headings chhote */
-  .card h2 {
-    font-size: 19px;
-  }
-
-  /* Working days ke checkboxes wrap hon */
   .day-option {
-    padding: 6px 10px;
+    padding: 7px 12px;
     font-size: 13px;
   }
 
-  /* Button ko touch karna asaan ho */
   .btn {
     padding: 14px;
   }
 }
 
-/* Chhoti screen par nav ke andar buttons ki width */
+/* ===== Bahut chhoti screen ===== */
 @media (max-width: 360px) {
-  .top-bar h1 {
-    font-size: 20px;
-  }
   .nav-link {
     font-size: 12px;
     padding: 8px 6px;
   }
 }
 
-
-/* ===== Announcements ===== */
-/* Textarea ko bhi input jaisa dikhao */
-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  font-family: inherit;
-  font-size: 15px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  background: #fafcfd;
-  resize: vertical;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--white);
-  box-shadow: 0 0 0 4px rgba(43, 179, 163, 0.2);
-}
-
-/* Ek announcement ka box */
-.ann-item {
-  background: #f0f8f7;
-  border-left: 4px solid var(--accent);
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.ann-item p {
-  font-size: 14px;
-  margin: 4px 0;
+/* ===== Jo log animation kam chahte hain unke liye ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
