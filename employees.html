@@ -67,6 +67,18 @@
         <input type="date" id="empJoin">
         <span class="error" id="errEmpJoin"></span>
 
+        <label for="empSecQuestion">Security sawal</label>
+        <select id="empSecQuestion">
+          <option value="Aap ke pehle pet ka naam kya tha?">Aap ke pehle pet ka naam kya tha?</option>
+          <option value="Aap ka pasandeeda rang kya hai?">Aap ka pasandeeda rang kya hai?</option>
+          <option value="Aap ke bachpan ka shehar kaunsa hai?">Aap ke bachpan ka shehar kaunsa hai?</option>
+          <option value="Apkay school ka naam kia tha?">Apkay school ka naam kia tha?</option>
+        </select>
+
+        <label for="empSecAnswer">Sawal ka jawab (employee password bhool jaye to kaam aayega)</label>
+        <input type="text" id="empSecAnswer">
+        <span class="error" id="errEmpSecAnswer"></span>
+
         <button type="submit" id="saveBtn" class="btn">Save karein</button>
         <button type="button" id="cancelBtn" class="btn btn-secondary hidden">Cancel</button>
       </form>

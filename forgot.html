@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCM Lite - Password reset</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="page">
+
+        <header class="top-bar">
+            <h1>HCM Lite</h1>
+            <p>Password reset</p>
+        </header>
+
+        <section class="card">
+
+            <!-- Step 1: email -->
+            <div id="stepFind">
+                <h2>Account dhoondein</h2>
+                <p class="hint">Apna email likhein. Aap ka security sawal dikhaya jayega.</p>
+
+                <form id="forgotForm" novalidate>
+                    <label for="forgotEmail">Email</label>
+                    <input type="email" id="forgotEmail" placeholder="email@mail.com">
+                    <span class="error" id="errFindEmail"></span>
+
+                    <button type="submit" class="btn">Agla step</button>
+                </form>
+            </div>
+
+            <!-- Step 2: sawal ka jawab aur naya password -->
+            <div id="stepReset" class="hidden">
+                <h2>Naya password banayein</h2>
+                <p class="hint" id="forgotQuestion"></p>
+
+                <form id="resetForm" novalidate>
+                    <label for="fAnswer">Sawal ka jawab</label>
+                    <input type="text" id="fAnswer">
+                    <span class="error" id="errFAnswer"></span>
+
+                    <label for="fNewPass">Naya password</label>
+                    <input type="password" id="fNewPass" placeholder="Kam se kam 6 characters">
+                    <span class="error" id="errFNew"></span>
+
+                    <label for="fConfirmPass">Naya password dobara likhein</label>
+                    <input type="password" id="fConfirmPass">
+                    <span class="error" id="errFConfirm"></span>
+
+                    <button type="submit" class="btn">Password badlein</button>
+                </form>
+            </div>
+
+            <p class="success" id="forgotMsg"></p>
+
+            <p class="hint" style="margin-top:16px; text-align:center;">
+                <a href="index.html">Login par wapas jayein</a>
+            </p>
+        </section>
+
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

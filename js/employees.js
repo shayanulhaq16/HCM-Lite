@@ -1,5 +1,6 @@
 // employees.js
 // Feature 4: Admin employees ko add, edit, delete, search aur department filter karta hai.
+// Joining date, security sawal aur admin password reset bhi yahin hai.
 
 // Pehle check karo ke user Admin hai ya nahi.
 // Agar Admin nahi hai to checkAccess (auth.js) khud usay uske dashboard par bhej dega.
@@ -64,9 +65,16 @@ function isEmailTakenExcept(email, ignoreId) {
 }
 
 // Form ke saare error messages khali karta hai.
-// Form ke saare error messages khali karta hai.
 function clearEmpErrors() {
-  var ids = ["errEmpName", "errEmpEmail", "errEmpPassword", "errEmpDepartment", "errEmpSalary", "errEmpJoin"];
+  var ids = [
+    "errEmpName",
+    "errEmpEmail",
+    "errEmpPassword",
+    "errEmpDepartment",
+    "errEmpSalary",
+    "errEmpJoin",
+    "errEmpSecAnswer"
+  ];
 
   for (var i = 0; i < ids.length; i++) {
     document.getElementById(ids[i]).innerHTML = "";
@@ -102,6 +110,9 @@ function handleEmployeeSave(event) {
   var salaryText = document.getElementById("empSalary").value;
   var salary = Number(salaryText);
   var joinDate = document.getElementById("empJoin").value; // "YYYY-MM-DD" ya khali
+
+  // Security sawal: naye employee ke liye zaroori, edit mein khali chhod sakte hain
+  var recovery = readRecovery("empSecQuestion", "empSecAnswer", "errEmpSecAnswer", !isEditing);
 
   var ignoreId = isEditing ? Number(editId) : -1;
 
@@ -141,6 +152,10 @@ function handleEmployeeSave(event) {
     hasError = true;
   }
 
+  if (recovery === null) {
+    hasError = true;
+  }
+
   if (hasError) {
     return;
   }
@@ -165,8 +180,15 @@ function handleEmployeeSave(event) {
     users[index].salary = salary;
     users[index].joinDate = joinDate;
 
+    // Password sirf tab badlo jab naya likha ho
     if (password !== "") {
       users[index].password = password;
+    }
+
+    // Security sawal sirf tab badlo jab naya jawab likha ho
+    if (recovery.answer !== "") {
+      users[index].securityQuestion = recovery.question;
+      users[index].securityAnswer = recovery.answer;
     }
 
     saveUsers(users);
@@ -180,7 +202,9 @@ function handleEmployeeSave(event) {
       role: "employee",
       department: department,
       salary: salary,
-      joinDate: joinDate
+      joinDate: joinDate,
+      securityQuestion: recovery.question,
+      securityAnswer: recovery.answer
     });
 
     saveUsers(users);
@@ -211,6 +235,7 @@ function startEdit(id) {
   document.getElementById("empDepartment").value = user.department;
   document.getElementById("empSalary").value = user.salary;
   document.getElementById("empJoin").value = user.joinDate || ""; // purane employees ke liye khali
+  document.getElementById("empSecAnswer").value = ""; // jawab dikhate nahi
 
   document.getElementById("formTitle").innerHTML = "Employee edit karein";
   document.getElementById("saveBtn").innerHTML = "Update karein";
@@ -247,6 +272,30 @@ function deleteEmployee(id) {
   document.getElementById("empMessage").innerHTML = "Employee delete ho gaya.";
   fillDepartmentFilter();
   showEmployees();
+}
+
+// Admin kisi employee ka password reset karta hai (employee bhool gaya ho to).
+function resetEmployeePassword(id) {
+  var newPass = prompt("Employee ka naya password likhein (kam se kam 6 characters):");
+
+  if (newPass === null) {
+    return; // Cancel dabaya
+  }
+
+  if (newPass.length < 6) {
+    document.getElementById("empMessage").innerHTML = "Password kam se kam 6 characters ka ho.";
+    return;
+  }
+
+  var users = getUsers();
+  var index = findUserIndex(id);
+  if (index === -1) {
+    return;
+  }
+
+  users[index].password = newPass;
+  saveUsers(users);
+  document.getElementById("empMessage").innerHTML = "Employee ka password reset ho gaya.";
 }
 
 // ================= Search aur filter =================
@@ -303,6 +352,7 @@ function showEmployees() {
         "<td>" + emp.salary + "</td>" +
         "<td>" +
           "<button type='button' class='small-btn' onclick='startEdit(" + emp.id + ")'>Edit</button>" +
+          "<button type='button' class='small-btn' onclick='resetEmployeePassword(" + emp.id + ")'>Reset</button>" +
           "<button type='button' class='small-btn danger-btn' onclick='deleteEmployee(" + emp.id + ")'>Delete</button>" +
         "</td>" +
         "</tr>";

@@ -10,7 +10,8 @@ var errorIds = [
   "errLeaveQuota",
   "errAdminName",
   "errAdminEmail",
-  "errAdminPassword"
+  "errAdminPassword",
+  "errSecAnswer"
 ];
 
 // Login form ke error messages ki ID list.
@@ -165,6 +166,12 @@ function handleSetup(event) {
   var graceMinutes = Number(graceText);
   var leaveQuota = Number(quotaText);
 
+  // Security sawal ka jawab (forgot password ke liye)
+  var recovery = readRecovery("secQuestion", "secAnswer", "errSecAnswer", true);
+  if (recovery === null) {
+    hasError = true;
+  }
+
   var hasError = false;
 
   if (companyName === "") {
@@ -229,7 +236,9 @@ function handleSetup(event) {
     password: adminPassword,
     role: "admin",
     department: "HR",
-    salary: 0
+    salary: 0,
+    securityQuestion: recovery.question,
+    securityAnswer: recovery.answer
   };
   users.push(admin);
   saveUsers(users);
@@ -263,8 +272,8 @@ function isValidEmail(email) {
   var dotPosition = email.lastIndexOf(".");
 
   return atPosition > 0 &&
-         dotPosition > atPosition + 1 &&
-         dotPosition < email.length - 1;
+    dotPosition > atPosition + 1 &&
+    dotPosition < email.length - 1;
 }
 
 // Check karta hai ke ye email kisi user ke paas pehle se hai ya nahi.
@@ -511,4 +520,132 @@ if (document.getElementById("settingsForm") !== null) {
     document.getElementById("settingsForm").addEventListener("submit", handleSettingsSave);
     loadSettingsForm();
   }
+}
+
+
+// ================= Security sawal (forgot password ke liye) =================
+
+// Form se sawal aur jawab lo. required true ho to jawab zaroori hai.
+// Return: { question, answer } ya khali jawab par { question: "", answer: "" } (required false ho to).
+// Galat ho to null return karta hai aur error dikhata hai.
+function readRecovery(selectId, answerId, errId, required) {
+  var question = document.getElementById(selectId).value;
+  var answer = document.getElementById(answerId).value.trim().toLowerCase();
+  var errBox = document.getElementById(errId);
+
+  if (answer === "") {
+    if (required) {
+      errBox.innerHTML = "Security sawal ka jawab likhein.";
+      return null;
+    }
+    return { question: "", answer: "" };
+  }
+
+  if (answer.length < 2) {
+    errBox.innerHTML = "Jawab kam se kam 2 characters ka ho.";
+    return null;
+  }
+
+  return { question: question, answer: answer };
+}
+
+// ================= Forgot password (forgot.html) =================
+
+// Email se user dhoondta hai. Nahi mila to null.
+function findUserByEmail(email) {
+  var users = getUsers();
+  var target = email.toLowerCase();
+
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].email.toLowerCase() === target) {
+      return users[i];
+    }
+  }
+  return null;
+}
+
+// Step 1: email dekh kar user ka sawal dikhana.
+var forgotUser = null; // jis user ka password reset ho raha hai
+
+function handleFindAccount(event) {
+  event.preventDefault();
+
+  document.getElementById("errFindEmail").innerHTML = "";
+  document.getElementById("forgotMsg").innerHTML = "";
+
+  var email = document.getElementById("forgotEmail").value.trim();
+
+  if (!isValidEmail(email)) {
+    showError("errFindEmail", "Sahi email likhein.");
+    return;
+  }
+
+  var user = findUserByEmail(email);
+  if (user === null) {
+    showError("errFindEmail", "Is email ka account nahi mila.");
+    return;
+  }
+
+  if (!user.securityAnswer) {
+    document.getElementById("forgotMsg").innerHTML =
+      "Is account par security sawal set nahi hai. Admin se kahein ke Employees page par password reset kare.";
+    return;
+  }
+
+  forgotUser = user;
+  document.getElementById("forgotQuestion").innerHTML = "<strong>Sawal:</strong> " + user.securityQuestion;
+  document.getElementById("stepFind").classList.add("hidden");
+  document.getElementById("stepReset").classList.remove("hidden");
+}
+
+// Step 2: jawab sahi ho to naya password save karna.
+function handleResetPassword(event) {
+  event.preventDefault();
+
+  document.getElementById("errFAnswer").innerHTML = "";
+  document.getElementById("errFNew").innerHTML = "";
+  document.getElementById("errFConfirm").innerHTML = "";
+
+  var answer = document.getElementById("fAnswer").value.trim().toLowerCase();
+  var newPass = document.getElementById("fNewPass").value;
+  var confirmPass = document.getElementById("fConfirmPass").value;
+
+  var hasError = false;
+
+  if (answer !== forgotUser.securityAnswer) {
+    showError("errFAnswer", "Jawab galat hai.");
+    hasError = true;
+  }
+
+  if (newPass.length < 6) {
+    showError("errFNew", "Naya password kam se kam 6 characters ka ho.");
+    hasError = true;
+  }
+
+  if (confirmPass !== newPass) {
+    showError("errFConfirm", "Dono password aik jaise nahi hain.");
+    hasError = true;
+  }
+
+  if (hasError) {
+    return;
+  }
+
+  var users = getUsers();
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id === forgotUser.id) {
+      users[i].password = newPass;
+    }
+  }
+  saveUsers(users);
+
+  document.getElementById("stepReset").classList.add("hidden");
+  document.getElementById("forgotMsg").innerHTML =
+    "Password badal gaya. <a href='index.html'>Ab login karein</a>.";
+}
+
+// forgot.html par chalao
+if (document.getElementById("forgotForm") !== null) {
+  document.getElementById("forgotForm").addEventListener("submit", handleFindAccount);
+  document.getElementById("resetForm").addEventListener("submit", handleResetPassword);
 }

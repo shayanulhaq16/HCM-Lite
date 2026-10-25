@@ -853,3 +853,20 @@ tbody tr:hover td {
     transition: none !important;
   }
 }
+
+/* ===== Forgot password link ===== */
+.forgot-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-dark);
+  text-decoration: none;
+  transition: color 0.2s, letter-spacing 0.2s;
+}
+
+.forgot-link:hover {
+  color: var(--primary);
+  letter-spacing: 0.3px;
+  text-decoration: underline;
+}
